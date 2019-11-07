@@ -1,6 +1,6 @@
-// import * as forge from "node-forge"
-// import { WebSock } from "./WebSock"
-// import * as URI from "uri-js";
+import * as forge from "node-forge"
+import { WebSock } from "./WebSock"
+import * as URI from "uri-js";
 import { IClosable } from "./ICloseable"
 
 export class TlsStream {
@@ -18,13 +18,13 @@ export class TlsStream {
 
     async setupTlsStream(input: RequestInfo, init?: RequestInit) {
 
-        let WebSock = (await import("./WebSock")).WebSock;
+        // let WebSock = (await import("./WebSock")).WebSock;
 
         this.webSocket = new WebSock();
 
         let onData = null;
 
-        let forge = await import("node-forge");
+        // let forge = await import("node-forge");
 
         this.client = forge.tls.createConnection({
 
@@ -32,12 +32,12 @@ export class TlsStream {
 
             connected: async (connection) => {
 
-                let uri = (await import("uri-js")).parse(input as string).host;
+                // let uri = (await import("uri-js")).parse(input as string).host;
 
                 let postMessage = [
                     `${init.method} /oauth/token HTTP/1.1`,
                     ...Object.keys(init.headers).map(i => `${i}: ${init.headers[i]}`),
-                    `Host: ${uri}`,
+                    `Host: ${URI.parse(input as string).host}`,
                     "Content-Type: application/javascript",
                     `Content-Length: ${init.body.toString().length}`,
                     "",

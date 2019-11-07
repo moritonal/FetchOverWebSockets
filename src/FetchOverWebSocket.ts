@@ -1,4 +1,5 @@
 import { IClosable } from "./ICloseable"
+import { TlsStream } from "./TlsStream";
 import { StringStreamToLineStream } from "./StringStreamToLineStream";
 
 // Wildcard imports are supported by Parcel.js
@@ -38,7 +39,7 @@ export default class FetchOverWebSocket {
             this.certificateAuthorityStore = await this.buildCertificateAuthorityStore();
         }
 
-        const TlsStream = (await import("./TlsStream")).TlsStream;
+        // const TlsStream = (await import("./TlsStream")).TlsStream;
 
         // Sets up the TLS stream with the certificate authority
         let tlsStream = new TlsStream(this.certificateAuthorityStore);
