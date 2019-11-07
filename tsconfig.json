@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "sourceMap": false,
+        "module": "esnext",
+        "lib": ["esnext", "dom"]
+    }
+}
