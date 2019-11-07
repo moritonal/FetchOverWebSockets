@@ -1,0 +1,30 @@
+{
+  "name": "fetch-over-websockets",
+  "version": "1.0.0",
+  "description": "Implementation of Fetch over TCP via WebSockets",
+  "main": "./dist/FetchOverWebSocket.js",
+  "scripts": {
+    "build": "npm-run-all build:*",
+    "build:cleanDist": "trash ./dist",
+    "build:parcel": "parcel build src/FetchOverWebSocket.ts --no-source-maps"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moritonal/FetchOverWebSockets.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "closed",
+  "bugs": {
+    "url": "https://github.com/moritonal/FetchOverWebSockets/issues"
+  },
+  "homepage": "https://github.com/moritonal/FetchOverWebSockets#readme",
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5",
+    "trash-cli": "^3.0.0"
+  }
+}
