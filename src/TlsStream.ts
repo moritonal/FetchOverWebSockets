@@ -1,6 +1,7 @@
 import * as forge from "node-forge"
-import { WebSock } from "./WebSock"
 import * as URI from "uri-js";
+
+import { WebSock } from "./WebSock"
 import { IClosable } from "./ICloseable"
 
 export class TlsStream {
