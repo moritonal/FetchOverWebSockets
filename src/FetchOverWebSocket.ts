@@ -126,8 +126,6 @@ export default class FetchOverWebSocket {
             headers: headers
         });
 
-        console.log(response);
-
         return response;
     }
 }

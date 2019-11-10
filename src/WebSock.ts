@@ -193,14 +193,12 @@ export class WebSock {
         this._websocket.onmessage = this._recv_message.bind(this);
 
         this._websocket.onopen = (function () {
-            console.debug('>> WebSock.onopen');
 
             if (this._websocket.protocol) {
                 console.info("Server choose sub-protocol: " + this._websocket.protocol);
             }
 
             this._eventHandlers.open();
-            console.debug("<< WebSock.onopen");
         }).bind(this);
 
         this._websocket.onclose = (function (e) {
@@ -220,7 +218,6 @@ export class WebSock {
         if (this._websocket) {
             if ((this._websocket.readyState === WebSocket.OPEN) ||
                 (this._websocket.readyState === WebSocket.CONNECTING)) {
-                console.info("Closing WebSocket connection");
                 this._websocket.close();
             }
 
