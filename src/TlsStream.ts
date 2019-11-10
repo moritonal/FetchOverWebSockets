@@ -72,8 +72,6 @@ export class TlsStream {
                 var data = connection.data.getBytes();
 
                 await onData(data);
-
-                // client.close();
             },
             closed: async () => {
                 this.client = null;
