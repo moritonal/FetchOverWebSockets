@@ -19,7 +19,7 @@ export default class FetchOverWebSocket {
         this.websocketEndpoint = websocketEndpoint;
     }
 
-    async buildCertificateAuthorityStore() {
+    private async buildCertificateAuthorityStore() {
 
         let caStore = [];
 
@@ -30,33 +30,8 @@ export default class FetchOverWebSocket {
 
         return caStore;
     }
-
-    async fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
-
-        if (this.certificateAuthorityStore == null) {
-
-            // First time we should fetch the CA
-            this.certificateAuthorityStore = await this.buildCertificateAuthorityStore();
-        }
-
-        // const TlsStream = (await import("./TlsStream")).TlsStream;
-
-        // Sets up the TLS stream with the certificate authority
-        let tlsStream = new TlsStream(this.certificateAuthorityStore);
-
-        // Sets up the TLS stream with the fetch parameters
-        await tlsStream.setupTlsStream(input, init);
-
-        // This is a generator function yielding HTTP chunks
-        let dataStream = tlsStream.openTlsStream(this.websocketEndpoint);
-
-        // Pass the HTTP-chunk-stream into our handler
-        let response = await this.handleResponse(tlsStream.client, dataStream);
-
-        return response;
-    }
-
-    async handleResponse(client: IClosable, stream: AsyncGenerator<string, void, never>) : Promise<Response> {
+    
+    private async handleResponse(client: IClosable, stream: AsyncGenerator<string, void, never>) : Promise<Response> {
 
         // Pipe the HTTP stream to a line stream
         let lineStream = StringStreamToLineStream(stream);
@@ -128,4 +103,27 @@ export default class FetchOverWebSocket {
 
         return response;
     }
+
+    async fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
+
+        if (this.certificateAuthorityStore == null) {
+
+            // First time we should fetch the CA
+            this.certificateAuthorityStore = await this.buildCertificateAuthorityStore();
+        }
+
+        // Sets up the TLS stream with the certificate authority
+        let tlsStream = new TlsStream(this.certificateAuthorityStore);
+
+        // Sets up the TLS stream with the fetch parameters
+        await tlsStream.setupTlsStream(input, init);
+
+        // This is a generator function yielding HTTP chunks
+        let dataStream = tlsStream.openTlsStream(this.websocketEndpoint);
+
+        // Pass the HTTP-chunk-stream into our handler
+        let response = await this.handleResponse(tlsStream.client, dataStream);
+
+        return response;
+    }    
 }
