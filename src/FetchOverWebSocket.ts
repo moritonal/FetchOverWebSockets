@@ -104,7 +104,7 @@ export default class FetchOverWebSocket {
         return response;
     }
 
-    async fetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
+    async fetch(input: RequestInfo, init?: RequstInitWithUrl): Promise<Response> {
 
         if (this.certificateAuthorityStore == null) {
 

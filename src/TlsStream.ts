@@ -17,7 +17,7 @@ export class TlsStream {
     buffer: Array<string> = [];
     watch = null;
 
-    async setupTlsStream(input: RequestInfo, init?: RequestInit) {
+    async setupTlsStream(input: RequestInfo, init?: RequstInitWithUrl) {
 
         this.webSocket = new WebSock();
 
@@ -30,7 +30,7 @@ export class TlsStream {
             connected: async (connection) => {
 
                 let postMessage = [
-                    `${init.method} /oauth/token HTTP/1.1`,
+                    `${init.method} ${init.url} HTTP/1.1`,
 
                     ...Object.keys(init.headers).map(i => `${i}: ${init.headers[i]}`),
                     `Host: ${URI.parse(input as string).host}`,
