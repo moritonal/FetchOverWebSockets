@@ -19,13 +19,9 @@ export class TlsStream {
 
     async setupTlsStream(input: RequestInfo, init?: RequestInit) {
 
-        // let WebSock = (await import("./WebSock")).WebSock;
-
         this.webSocket = new WebSock();
 
         let onData = null;
-
-        // let forge = await import("node-forge");
 
         this.client = forge.tls.createConnection({
 
@@ -33,14 +29,14 @@ export class TlsStream {
 
             connected: async (connection) => {
 
-                // let uri = (await import("uri-js")).parse(input as string).host;
-
                 let postMessage = [
                     `${init.method} /oauth/token HTTP/1.1`,
+
                     ...Object.keys(init.headers).map(i => `${i}: ${init.headers[i]}`),
                     `Host: ${URI.parse(input as string).host}`,
                     "Content-Type: application/javascript",
                     `Content-Length: ${init.body.toString().length}`,
+
                     "",
                     init.body,
                     "",
@@ -68,22 +64,25 @@ export class TlsStream {
             },
             dataReady: async (connection) => {
 
-                // clear data from the server is ready
+                // Clear data from the server is ready
                 var data = connection.data.getBytes();
 
                 await onData(data);
             },
             closed: async () => {
+
                 this.client = null;
                 await onData(null);
             },
-            error: async (connection, error) => {
+            error: async (connection : any, error : any) => {
+
                 console.error('[TLS] Error', error);
                 await onData(null);
             }
         });
 
         this.webSocket.on("open", () => {
+
             this.client.handshake();
         });
 
